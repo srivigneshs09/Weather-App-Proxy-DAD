@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            width: 250px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #ff9800;
+            color: white;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #e68900;
+        }
+
+        .weather-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .weather-container h2 {
+            margin-bottom: 10px;
+            font-size: 1.8em;
+        }
+
+        .weather-container p {
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌤️ Weather App</h1>
+    
+    <form method="POST">
+        <input type="text" name="location" placeholder="Enter location" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if weather %}
+    <div class="weather-container">
+        <h2>🌎 Weather in {{ weather.location }}</h2>
+        <p>🌡️ Temperature: <strong>{{ weather.temperature }}</strong></p>
+        <p>☁️ Condition: <strong>{{ weather.condition }}</strong></p>
+        <p>💧 Humidity: <strong>{{ weather.humidity }}</strong></p>
+        <p>💨 Wind Speed: <strong>{{ weather.wind_speed }}</strong></p>
+    </div>
+    {% endif %}
+</body>
+</html>

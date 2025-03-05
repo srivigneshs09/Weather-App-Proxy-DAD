@@ -1,0 +1,29 @@
+version: '3'
+services:
+  weather_service:
+    build:
+      context: ./weather_service
+      dockerfile: Dockerfile
+    container_name: weather_service
+    ports:
+      - "5001:5001"
+
+  ambassador_proxy:
+    build:
+      context: ./ambassador_proxy
+      dockerfile: Dockerfile
+    container_name: ambassador_proxy
+    ports:
+      - "5000:5000"
+    depends_on:
+      - weather_service
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "5002:5002"
+    depends_on:
+      - ambassador_proxy
