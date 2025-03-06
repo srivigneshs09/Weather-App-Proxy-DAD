@@ -1,29 +1,33 @@
-version: '3'
-services:
-  weather_service:
-    build:
-      context: ./weather_service
-      dockerfile: Dockerfile
-    container_name: weather_service
-    ports:
-      - "5001:5001"
+version: "3.8"
 
-  ambassador_proxy:
-    build:
-      context: ./ambassador_proxy
-      dockerfile: Dockerfile
-    container_name: ambassador_proxy
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "5002:5002"
+    depends_on:
+      - ambassador
+    restart: always  # Ensures the service restarts if it fails
+
+  ambassador:
+    build: ./ambassador_proxy
     ports:
       - "5000:5000"
     depends_on:
       - weather_service
+      - sidecar
+    restart: always
 
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: frontend
+  weather_service:
+    build: ./weather_service
     ports:
-      - "5002:5002"
-    depends_on:
-      - ambassador_proxy
+      - "5001:5001"
+    restart: always
+
+  sidecar:
+    build: ./sidecar_service
+    ports:
+      - "5003:5003"
+    volumes:
+      - ./sidecar_service/logs:/logs  # Persist logs outside the container
+    restart: always

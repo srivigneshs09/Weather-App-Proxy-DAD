@@ -1,19 +1,21 @@
+from flask import Flask, request, jsonify
 import requests
-from flask import Flask, jsonify, request
 
 app = Flask(__name__)
 
 WEATHER_SERVICE_URL = "http://weather_service:5001/weather"
+SIDECAR_URL = "http://sidecar:5003/log"
 
-@app.route('/weather', methods=['GET'])
-def proxy_weather():
-    location = request.args.get("location", "New York")
-    response = requests.get(WEATHER_SERVICE_URL, params={"location": location})
+@app.route("/weather")
+def get_weather():
+    location = request.args.get("location")
+    
+    # Log request via Sidecar
+    requests.post(SIDECAR_URL, json={"location": location})
 
-    if response.status_code != 200:
-        return jsonify({"error": "Failed to fetch weather data"}), response.status_code
+    # Forward request to Weather Service
+    response = requests.get(f"{WEATHER_SERVICE_URL}?location={location}")
+    return response.json()
 
-    return jsonify(response.json())
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)

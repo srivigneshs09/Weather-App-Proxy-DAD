@@ -1,0 +1,9 @@
+2025-03-06 08:24:47,402 - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5003
+ * Running on http://172.18.0.3:5003
+2025-03-06 08:24:47,403 - INFO - [33mPress CTRL+C to quit[0m
+2025-03-06 08:24:52,894 - INFO - Received request for location: chennai
+2025-03-06 08:24:52,895 - INFO - 172.18.0.4 - - [06/Mar/2025 08:24:52] "POST /log HTTP/1.1" 200 -
+2025-03-06 08:24:57,835 - INFO - Received request for location: madurai
+2025-03-06 08:24:57,836 - INFO - 172.18.0.4 - - [06/Mar/2025 08:24:57] "POST /log HTTP/1.1" 200 -
